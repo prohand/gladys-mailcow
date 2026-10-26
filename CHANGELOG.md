@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-10-26
+
 ### Added
 
 - First version of the mailcow integration, started from the official Gladys
@@ -44,4 +46,5 @@ the notes of the version's GitHub Release.
 - The certificate of the public address is always checked; only the LAN
   address can skip the check. The API key is never logged.
 
-[Unreleased]: https://github.com/prohand/gladys-mailcow/commits/main
+[Unreleased]: https://github.com/prohand/gladys-mailcow/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/prohand/gladys-mailcow/releases/tag/v2.0.0

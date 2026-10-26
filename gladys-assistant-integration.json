@@ -8,8 +8,8 @@
     "de": "Überwache deinen mailcow-Mailserver: Container, Queue, Quarantäne, Speicher, Postfächer.",
     "es": "Supervise su servidor mailcow: contenedores, cola, cuarentena, almacenamiento y buzones."
   },
-  "version": "1.0.0",
-  "docker_image": "ghcr.io/prohand/gladys-mailcow:1.0.0",
+  "version": "2.0.0",
+  "docker_image": "ghcr.io/prohand/gladys-mailcow:2.0.0",
   "gladys_version": ">=5.3.0",
   "cover_image": "https://raw.githubusercontent.com/prohand/gladys-mailcow/main/cover.png",
   "categories": ["servers", "security"],
@@ -463,11 +463,21 @@
           "options": [
             {
               "value": "acme",
-              "label": { "en": "acme", "fr": "acme", "de": "acme", "es": "acme" }
+              "label": {
+                "en": "acme",
+                "fr": "acme",
+                "de": "acme",
+                "es": "acme"
+              }
             },
             {
               "value": "clamd",
-              "label": { "en": "clamd", "fr": "clamd", "de": "clamd", "es": "clamd" }
+              "label": {
+                "en": "clamd",
+                "fr": "clamd",
+                "de": "clamd",
+                "es": "clamd"
+              }
             },
             {
               "value": "dockerapi",
@@ -480,7 +490,12 @@
             },
             {
               "value": "dovecot",
-              "label": { "en": "dovecot", "fr": "dovecot", "de": "dovecot", "es": "dovecot" }
+              "label": {
+                "en": "dovecot",
+                "fr": "dovecot",
+                "de": "dovecot",
+                "es": "dovecot"
+              }
             },
             {
               "value": "memcached",
@@ -493,7 +508,12 @@
             },
             {
               "value": "mysql",
-              "label": { "en": "mysql", "fr": "mysql", "de": "mysql", "es": "mysql" }
+              "label": {
+                "en": "mysql",
+                "fr": "mysql",
+                "de": "mysql",
+                "es": "mysql"
+              }
             },
             {
               "value": "netfilter",
@@ -506,43 +526,93 @@
             },
             {
               "value": "nginx",
-              "label": { "en": "nginx", "fr": "nginx", "de": "nginx", "es": "nginx" }
+              "label": {
+                "en": "nginx",
+                "fr": "nginx",
+                "de": "nginx",
+                "es": "nginx"
+              }
             },
             {
               "value": "ofelia",
-              "label": { "en": "ofelia", "fr": "ofelia", "de": "ofelia", "es": "ofelia" }
+              "label": {
+                "en": "ofelia",
+                "fr": "ofelia",
+                "de": "ofelia",
+                "es": "ofelia"
+              }
             },
             {
               "value": "olefy",
-              "label": { "en": "olefy", "fr": "olefy", "de": "olefy", "es": "olefy" }
+              "label": {
+                "en": "olefy",
+                "fr": "olefy",
+                "de": "olefy",
+                "es": "olefy"
+              }
             },
             {
               "value": "php-fpm",
-              "label": { "en": "php-fpm", "fr": "php-fpm", "de": "php-fpm", "es": "php-fpm" }
+              "label": {
+                "en": "php-fpm",
+                "fr": "php-fpm",
+                "de": "php-fpm",
+                "es": "php-fpm"
+              }
             },
             {
               "value": "postfix",
-              "label": { "en": "postfix", "fr": "postfix", "de": "postfix", "es": "postfix" }
+              "label": {
+                "en": "postfix",
+                "fr": "postfix",
+                "de": "postfix",
+                "es": "postfix"
+              }
             },
             {
               "value": "redis",
-              "label": { "en": "redis", "fr": "redis", "de": "redis", "es": "redis" }
+              "label": {
+                "en": "redis",
+                "fr": "redis",
+                "de": "redis",
+                "es": "redis"
+              }
             },
             {
               "value": "rspamd",
-              "label": { "en": "rspamd", "fr": "rspamd", "de": "rspamd", "es": "rspamd" }
+              "label": {
+                "en": "rspamd",
+                "fr": "rspamd",
+                "de": "rspamd",
+                "es": "rspamd"
+              }
             },
             {
               "value": "sogo",
-              "label": { "en": "sogo", "fr": "sogo", "de": "sogo", "es": "sogo" }
+              "label": {
+                "en": "sogo",
+                "fr": "sogo",
+                "de": "sogo",
+                "es": "sogo"
+              }
             },
             {
               "value": "unbound",
-              "label": { "en": "unbound", "fr": "unbound", "de": "unbound", "es": "unbound" }
+              "label": {
+                "en": "unbound",
+                "fr": "unbound",
+                "de": "unbound",
+                "es": "unbound"
+              }
             },
             {
               "value": "watchdog",
-              "label": { "en": "watchdog", "fr": "watchdog", "de": "watchdog", "es": "watchdog" }
+              "label": {
+                "en": "watchdog",
+                "fr": "watchdog",
+                "de": "watchdog",
+                "es": "watchdog"
+              }
             }
           ]
         }
@@ -597,11 +667,21 @@
           "options": [
             {
               "value": "acme",
-              "label": { "en": "acme", "fr": "acme", "de": "acme", "es": "acme" }
+              "label": {
+                "en": "acme",
+                "fr": "acme",
+                "de": "acme",
+                "es": "acme"
+              }
             },
             {
               "value": "clamd",
-              "label": { "en": "clamd", "fr": "clamd", "de": "clamd", "es": "clamd" }
+              "label": {
+                "en": "clamd",
+                "fr": "clamd",
+                "de": "clamd",
+                "es": "clamd"
+              }
             },
             {
               "value": "dockerapi",
@@ -614,7 +694,12 @@
             },
             {
               "value": "dovecot",
-              "label": { "en": "dovecot", "fr": "dovecot", "de": "dovecot", "es": "dovecot" }
+              "label": {
+                "en": "dovecot",
+                "fr": "dovecot",
+                "de": "dovecot",
+                "es": "dovecot"
+              }
             },
             {
               "value": "memcached",
@@ -627,7 +712,12 @@
             },
             {
               "value": "mysql",
-              "label": { "en": "mysql", "fr": "mysql", "de": "mysql", "es": "mysql" }
+              "label": {
+                "en": "mysql",
+                "fr": "mysql",
+                "de": "mysql",
+                "es": "mysql"
+              }
             },
             {
               "value": "netfilter",
@@ -640,43 +730,93 @@
             },
             {
               "value": "nginx",
-              "label": { "en": "nginx", "fr": "nginx", "de": "nginx", "es": "nginx" }
+              "label": {
+                "en": "nginx",
+                "fr": "nginx",
+                "de": "nginx",
+                "es": "nginx"
+              }
             },
             {
               "value": "ofelia",
-              "label": { "en": "ofelia", "fr": "ofelia", "de": "ofelia", "es": "ofelia" }
+              "label": {
+                "en": "ofelia",
+                "fr": "ofelia",
+                "de": "ofelia",
+                "es": "ofelia"
+              }
             },
             {
               "value": "olefy",
-              "label": { "en": "olefy", "fr": "olefy", "de": "olefy", "es": "olefy" }
+              "label": {
+                "en": "olefy",
+                "fr": "olefy",
+                "de": "olefy",
+                "es": "olefy"
+              }
             },
             {
               "value": "php-fpm",
-              "label": { "en": "php-fpm", "fr": "php-fpm", "de": "php-fpm", "es": "php-fpm" }
+              "label": {
+                "en": "php-fpm",
+                "fr": "php-fpm",
+                "de": "php-fpm",
+                "es": "php-fpm"
+              }
             },
             {
               "value": "postfix",
-              "label": { "en": "postfix", "fr": "postfix", "de": "postfix", "es": "postfix" }
+              "label": {
+                "en": "postfix",
+                "fr": "postfix",
+                "de": "postfix",
+                "es": "postfix"
+              }
             },
             {
               "value": "redis",
-              "label": { "en": "redis", "fr": "redis", "de": "redis", "es": "redis" }
+              "label": {
+                "en": "redis",
+                "fr": "redis",
+                "de": "redis",
+                "es": "redis"
+              }
             },
             {
               "value": "rspamd",
-              "label": { "en": "rspamd", "fr": "rspamd", "de": "rspamd", "es": "rspamd" }
+              "label": {
+                "en": "rspamd",
+                "fr": "rspamd",
+                "de": "rspamd",
+                "es": "rspamd"
+              }
             },
             {
               "value": "sogo",
-              "label": { "en": "sogo", "fr": "sogo", "de": "sogo", "es": "sogo" }
+              "label": {
+                "en": "sogo",
+                "fr": "sogo",
+                "de": "sogo",
+                "es": "sogo"
+              }
             },
             {
               "value": "unbound",
-              "label": { "en": "unbound", "fr": "unbound", "de": "unbound", "es": "unbound" }
+              "label": {
+                "en": "unbound",
+                "fr": "unbound",
+                "de": "unbound",
+                "es": "unbound"
+              }
             },
             {
               "value": "watchdog",
-              "label": { "en": "watchdog", "fr": "watchdog", "de": "watchdog", "es": "watchdog" }
+              "label": {
+                "en": "watchdog",
+                "fr": "watchdog",
+                "de": "watchdog",
+                "es": "watchdog"
+              }
             }
           ]
         }
