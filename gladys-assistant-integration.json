@@ -1,0 +1,1181 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "Mailcow",
+  "description": {
+    "en": "Watch your mailcow mail server: containers, queue, quarantine, storage and mailboxes.",
+    "fr": "Surveillez votre serveur mailcow : conteneurs, file, quarantaine, stockage et boîtes.",
+    "de": "Überwache deinen mailcow-Mailserver: Container, Queue, Quarantäne, Speicher, Postfächer.",
+    "es": "Supervise su servidor mailcow: contenedores, cola, cuarentena, almacenamiento y buzones."
+  },
+  "version": "1.0.0",
+  "docker_image": "ghcr.io/prohand/gladys-mailcow:1.0.0",
+  "gladys_version": ">=5.3.0",
+  "cover_image": "https://raw.githubusercontent.com/prohand/gladys-mailcow/main/cover.png",
+  "categories": ["servers", "security"],
+  "keywords": [
+    "mailcow",
+    "mail server",
+    "serveur mail",
+    "postfix",
+    "dovecot",
+    "rspamd",
+    "sogo",
+    "fail2ban",
+    "quarantine",
+    "email"
+  ],
+  "transports": ["local", "cloud"],
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "Getting started",
+        "fr": "Pour commencer",
+        "de": "Erste Schritte",
+        "es": "Primeros pasos"
+      },
+      "description": {
+        "en": "The integration reads your mailcow server through its API. In mailcow, open System → Configuration → Access → Administrators, unfold API, create a read-only key (or a read-write one to act from Gladys) and add the IP Gladys reaches mailcow from to the allowed addresses. Give the LAN address, the public one, or both: the \"Prefer the local connection\" switch chooses which one is tried first, the other one is the fallback.",
+        "fr": "L'intégration lit votre serveur mailcow par son API. Dans mailcow, ouvrez Système → Configuration → Accès → Administrateurs, dépliez API, créez une clé en lecture seule (ou en lecture-écriture pour agir depuis Gladys) et ajoutez l'IP depuis laquelle Gladys joint mailcow aux adresses autorisées. Indiquez l'adresse locale, la publique, ou les deux : l'interrupteur « Préférer la connexion locale » choisit celle essayée en premier, l'autre sert de secours.",
+        "de": "Die Integration liest deinen mailcow-Server über seine API. Öffne in mailcow System → Konfiguration → Zugang → Administratoren, klappe API auf, erstelle einen Nur-Lese-Schlüssel (oder einen mit Schreibzugriff, um aus Gladys zu handeln) und trage die IP, von der Gladys mailcow erreicht, bei den erlaubten Adressen ein. Gib die lokale Adresse, die öffentliche oder beide an: Der Schalter „Lokale Verbindung bevorzugen“ wählt, welche zuerst versucht wird, die andere dient als Ersatz.",
+        "es": "La integración lee su servidor mailcow a través de su API. En mailcow, abra Sistema → Configuración → Acceso → Administradores, despliegue API, cree una clave de solo lectura (o de lectura y escritura para actuar desde Gladys) y añada la IP desde la que Gladys llega a mailcow a las direcciones permitidas. Indique la dirección local, la pública o ambas: el interruptor «Preferir la conexión local» elige cuál se prueba primero, la otra sirve de respaldo."
+      },
+      "links": [
+        {
+          "url": "https://docs.mailcow.email/third_party/thirdparty-api/",
+          "label": {
+            "en": "mailcow API documentation",
+            "fr": "Documentation de l'API mailcow",
+            "de": "Dokumentation der mailcow-API",
+            "es": "Documentación de la API de mailcow"
+          }
+        },
+        {
+          "url": "https://github.com/prohand/gladys-mailcow/blob/main/docs/en.md",
+          "label": {
+            "en": "Integration documentation",
+            "fr": "Documentation de l'intégration",
+            "de": "Dokumentation der Integration",
+            "es": "Documentación de la integración"
+          }
+        }
+      ]
+    },
+    {
+      "key": "local_url",
+      "type": "string",
+      "label": {
+        "en": "LAN address",
+        "fr": "Adresse locale",
+        "de": "Lokale Adresse",
+        "es": "Dirección local"
+      },
+      "description": {
+        "en": "The address of mailcow on your network (the \"local\" transport). Leave empty if mailcow is not on your network.",
+        "fr": "L'adresse de mailcow sur votre réseau (le transport « local »). Laissez vide si mailcow n'est pas sur votre réseau.",
+        "de": "Die Adresse von mailcow in deinem Netzwerk (der „lokale“ Transport). Leer lassen, wenn mailcow nicht in deinem Netzwerk ist.",
+        "es": "La dirección de mailcow en su red (el transporte «local»). Déjelo vacío si mailcow no está en su red."
+      },
+      "required": false,
+      "placeholder": {
+        "en": "https://192.168.1.20",
+        "fr": "https://192.168.1.20",
+        "de": "https://192.168.1.20",
+        "es": "https://192.168.1.20"
+      }
+    },
+    {
+      "key": "public_url",
+      "type": "string",
+      "label": {
+        "en": "Public address",
+        "fr": "Adresse publique",
+        "de": "Öffentliche Adresse",
+        "es": "Dirección pública"
+      },
+      "description": {
+        "en": "The address of mailcow on the internet (the \"cloud\" transport), e.g. a server at a hosting provider. Its certificate is always checked.",
+        "fr": "L'adresse de mailcow sur internet (le transport « cloud »), par exemple un serveur chez un hébergeur. Son certificat est toujours vérifié.",
+        "de": "Die Adresse von mailcow im Internet (der „Cloud“-Transport), z. B. ein Server bei einem Hoster. Sein Zertifikat wird immer geprüft.",
+        "es": "La dirección de mailcow en internet (el transporte «cloud»), p. ej. un servidor en un proveedor de alojamiento. Su certificado siempre se verifica."
+      },
+      "required": false,
+      "placeholder": {
+        "en": "https://mail.example.com",
+        "fr": "https://mail.exemple.fr",
+        "de": "https://mail.beispiel.de",
+        "es": "https://mail.ejemplo.es"
+      }
+    },
+    {
+      "key": "api_key",
+      "type": "secret",
+      "label": {
+        "en": "API key",
+        "fr": "Clé d'API",
+        "de": "API-Schlüssel",
+        "es": "Clave de API"
+      },
+      "description": {
+        "en": "The read-only key is enough to watch the server. The read-write key also lets Gladys flush the queue and turn domains and mailboxes on or off, when \"Allow changes\" is ticked.",
+        "fr": "La clé en lecture seule suffit pour surveiller le serveur. La clé en lecture-écriture permet aussi à Gladys de vider la file et d'activer ou désactiver domaines et boîtes mail, si « Autoriser les modifications » est coché.",
+        "de": "Der Nur-Lese-Schlüssel reicht, um den Server zu überwachen. Der Schlüssel mit Schreibzugriff erlaubt Gladys außerdem, die Warteschlange zu senden und Domains und Postfächer ein- oder auszuschalten, wenn „Änderungen erlauben“ aktiviert ist.",
+        "es": "La clave de solo lectura basta para supervisar el servidor. La de lectura y escritura también permite a Gladys vaciar la cola y activar o desactivar dominios y buzones, si «Permitir cambios» está marcado."
+      },
+      "required": true
+    },
+    {
+      "key": "verify_tls",
+      "type": "boolean",
+      "label": {
+        "en": "Check the certificate of the LAN address",
+        "fr": "Vérifier le certificat de l'adresse locale",
+        "de": "Zertifikat der lokalen Adresse prüfen",
+        "es": "Verificar el certificado de la dirección local"
+      },
+      "description": {
+        "en": "Reached by its IP, mailcow shows a certificate made for its domain name, which does not match: untick this for a LAN address written as an IP. The public address is always checked.",
+        "fr": "Jointe par son IP, mailcow présente un certificat fait pour son nom de domaine, qui ne correspond pas : décochez ceci pour une adresse locale écrite en IP. L'adresse publique est toujours vérifiée.",
+        "de": "Über seine IP erreicht, zeigt mailcow ein Zertifikat für seinen Domainnamen, das nicht passt: Deaktiviere dies für eine lokale Adresse, die als IP geschrieben ist. Die öffentliche Adresse wird immer geprüft.",
+        "es": "Accedido por su IP, mailcow muestra un certificado hecho para su nombre de dominio, que no coincide: desmarque esto para una dirección local escrita como IP. La dirección pública siempre se verifica."
+      },
+      "required": false,
+      "default": true
+    },
+    {
+      "key": "poll_frequency",
+      "type": "number",
+      "label": {
+        "en": "Refresh interval (s)",
+        "fr": "Intervalle de rafraîchissement (s)",
+        "de": "Aktualisierungsintervall (s)",
+        "es": "Intervalo de actualización (s)"
+      },
+      "description": {
+        "en": "How often the server is read, in seconds (one minute minimum). Every read is one request per section of the API.",
+        "fr": "Fréquence de lecture du serveur, en secondes (une minute minimum). Chaque lecture fait une requête par partie de l'API.",
+        "de": "Wie oft der Server gelesen wird, in Sekunden (mindestens eine Minute). Jedes Lesen ist eine Anfrage pro API-Bereich.",
+        "es": "Frecuencia de lectura del servidor, en segundos (un minuto como mínimo). Cada lectura es una petición por sección de la API."
+      },
+      "required": false,
+      "default": 300,
+      "min": 60,
+      "max": 3600
+    },
+    {
+      "key": "devices_section",
+      "type": "section",
+      "label": {
+        "en": "Devices",
+        "fr": "Appareils",
+        "de": "Geräte",
+        "es": "Dispositivos"
+      },
+      "description": {
+        "en": "The server is always a device. Each domain and each mailbox can be one too, to follow it, chart it, or turn it on and off from Gladys.",
+        "fr": "Le serveur est toujours un appareil. Chaque domaine et chaque boîte mail peuvent l'être aussi, pour les suivre, les grapher, ou les activer et désactiver depuis Gladys.",
+        "de": "Der Server ist immer ein Gerät. Jede Domain und jedes Postfach kann auch eines sein, um sie zu verfolgen, als Diagramm zu zeigen oder aus Gladys ein- und auszuschalten.",
+        "es": "El servidor es siempre un dispositivo. Cada dominio y cada buzón también pueden serlo, para seguirlos, verlos en gráficos o activarlos y desactivarlos desde Gladys."
+      }
+    },
+    {
+      "key": "domain_devices",
+      "type": "boolean",
+      "label": {
+        "en": "One device per domain",
+        "fr": "Un appareil par domaine",
+        "de": "Ein Gerät pro Domain",
+        "es": "Un dispositivo por dominio"
+      },
+      "required": false,
+      "default": true
+    },
+    {
+      "key": "mailbox_devices",
+      "type": "boolean",
+      "label": {
+        "en": "One device per mailbox",
+        "fr": "Un appareil par boîte mail",
+        "de": "Ein Gerät pro Postfach",
+        "es": "Un dispositivo por buzón"
+      },
+      "description": {
+        "en": "For a server with a few mailboxes (200 at most are published).",
+        "fr": "Pour un serveur avec peu de boîtes mail (200 au plus sont publiées).",
+        "de": "Für einen Server mit wenigen Postfächern (höchstens 200 werden veröffentlicht).",
+        "es": "Para un servidor con pocos buzones (se publican 200 como máximo)."
+      },
+      "required": false,
+      "default": false
+    },
+    {
+      "key": "allow_changes",
+      "type": "boolean",
+      "label": {
+        "en": "Allow changes",
+        "fr": "Autoriser les modifications",
+        "de": "Änderungen erlauben",
+        "es": "Permitir cambios"
+      },
+      "description": {
+        "en": "Let Gladys flush the mail queue and turn domains and mailboxes on or off (needs the read-write API key). Off, everything stays read-only.",
+        "fr": "Permet à Gladys de vider la file d'attente et d'activer ou désactiver domaines et boîtes mail (clé d'API en lecture-écriture nécessaire). Désactivé, tout reste en lecture seule.",
+        "de": "Erlaubt Gladys, die Mail-Warteschlange zu senden und Domains und Postfächer ein- oder auszuschalten (API-Schlüssel mit Schreibzugriff nötig). Ausgeschaltet bleibt alles schreibgeschützt.",
+        "es": "Permite a Gladys vaciar la cola de correo y activar o desactivar dominios y buzones (necesita la clave de API de lectura y escritura). Desactivado, todo queda en solo lectura."
+      },
+      "required": false,
+      "default": false
+    },
+    {
+      "key": "alerts_section",
+      "type": "section",
+      "label": {
+        "en": "Alert thresholds",
+        "fr": "Seuils d'alerte",
+        "de": "Alarmschwellen",
+        "es": "Umbrales de alerta"
+      },
+      "description": {
+        "en": "The scene triggers \"Mail queue too long\", \"Mail storage almost full\" and \"Mailbox almost full\" fire when a value goes over its threshold.",
+        "fr": "Les déclencheurs de scène « File d'attente trop longue », « Stockage presque plein » et « Boîte mail presque pleine » se déclenchent quand une valeur passe son seuil.",
+        "de": "Die Szenen-Auslöser „Mail-Warteschlange zu lang“, „Mailspeicher fast voll“ und „Postfach fast voll“ lösen aus, wenn ein Wert seine Schwelle überschreitet.",
+        "es": "Los disparadores de escena «Cola de correo demasiado larga», «Almacenamiento casi lleno» y «Buzón casi lleno» se activan cuando un valor supera su umbral."
+      }
+    },
+    {
+      "key": "queue_threshold",
+      "type": "number",
+      "label": {
+        "en": "Mail queue threshold",
+        "fr": "Seuil de la file d'attente",
+        "de": "Schwelle der Warteschlange",
+        "es": "Umbral de la cola"
+      },
+      "required": false,
+      "default": 20,
+      "min": 1,
+      "max": 100000
+    },
+    {
+      "key": "storage_threshold",
+      "type": "number",
+      "label": {
+        "en": "Mail storage threshold (%)",
+        "fr": "Seuil du stockage (%)",
+        "de": "Schwelle des Speichers (%)",
+        "es": "Umbral del almacenamiento (%)"
+      },
+      "required": false,
+      "default": 85,
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "quota_threshold",
+      "type": "number",
+      "label": {
+        "en": "Mailbox quota threshold (%)",
+        "fr": "Seuil du quota des boîtes (%)",
+        "de": "Schwelle des Postfach-Kontingents (%)",
+        "es": "Umbral de la cuota de buzones (%)"
+      },
+      "required": false,
+      "default": 90,
+      "min": 1,
+      "max": 100
+    },
+    {
+      "key": "debug_logs",
+      "type": "boolean",
+      "label": {
+        "en": "Detailed logs (debug)",
+        "fr": "Journaux détaillés (debug)",
+        "de": "Detaillierte Protokolle (Debug)",
+        "es": "Registros detallados (depuración)"
+      },
+      "description": {
+        "en": "Log every read of the server. The API key is never logged.",
+        "fr": "Journalise chaque lecture du serveur. La clé d'API n'est jamais journalisée.",
+        "de": "Protokolliert jedes Lesen des Servers. Der API-Schlüssel wird nie protokolliert.",
+        "es": "Registra cada lectura del servidor. La clave de API nunca se registra."
+      },
+      "required": false,
+      "default": false
+    }
+  ],
+  "actions": [
+    {
+      "key": "test_connection",
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
+      "timeout_seconds": 60
+    },
+    {
+      "key": "flush_queue",
+      "label": {
+        "en": "Flush the mail queue",
+        "fr": "Vider la file d'attente",
+        "de": "Mail-Warteschlange senden",
+        "es": "Vaciar la cola de correo"
+      },
+      "timeout_seconds": 60
+    }
+  ],
+  "widgets": [
+    {
+      "key": "mailcow_status",
+      "label": {
+        "en": "mailcow server",
+        "fr": "Serveur mailcow",
+        "de": "mailcow-Server",
+        "es": "Servidor mailcow"
+      },
+      "description": {
+        "en": "Server, containers, mail queue, storage, quarantine and banned IPs.",
+        "fr": "Serveur, conteneurs, file d'attente, stockage, quarantaine et IP bannies.",
+        "de": "Server, Container, Warteschlange, Speicher, Quarantäne und gesperrte IPs.",
+        "es": "Servidor, contenedores, cola, almacenamiento, cuarentena e IP bloqueadas."
+      },
+      "icon": "server",
+      "action_timeout_seconds": 60
+    },
+    {
+      "key": "mailcow_quarantine",
+      "label": {
+        "en": "mailcow quarantine",
+        "fr": "Quarantaine mailcow",
+        "de": "mailcow-Quarantäne",
+        "es": "Cuarentena mailcow"
+      },
+      "description": {
+        "en": "The last mails held in quarantine, with their spam score.",
+        "fr": "Les derniers mails mis en quarantaine, avec leur score de spam.",
+        "de": "Die letzten in Quarantäne gehaltenen Mails, mit ihrem Spam-Wert.",
+        "es": "Los últimos correos en cuarentena, con su puntuación de spam."
+      },
+      "icon": "shield",
+      "settings": [
+        {
+          "key": "items",
+          "type": "number",
+          "label": {
+            "en": "Mails shown",
+            "fr": "Mails affichés",
+            "de": "Angezeigte Mails",
+            "es": "Correos mostrados"
+          },
+          "required": false,
+          "default": 5,
+          "min": 1,
+          "max": 8
+        }
+      ],
+      "action_timeout_seconds": 60
+    },
+    {
+      "key": "mailcow_mailboxes",
+      "label": {
+        "en": "mailcow mailboxes",
+        "fr": "Boîtes mail mailcow",
+        "de": "mailcow-Postfächer",
+        "es": "Buzones mailcow"
+      },
+      "description": {
+        "en": "The mailboxes closest to their quota.",
+        "fr": "Les boîtes mail les plus proches de leur quota.",
+        "de": "Die Postfächer, die ihrem Kontingent am nächsten sind.",
+        "es": "Los buzones más cerca de su cuota."
+      },
+      "icon": "inbox",
+      "settings": [
+        {
+          "key": "items",
+          "type": "number",
+          "label": {
+            "en": "Mailboxes shown",
+            "fr": "Boîtes affichées",
+            "de": "Angezeigte Postfächer",
+            "es": "Buzones mostrados"
+          },
+          "required": false,
+          "default": 5,
+          "min": 1,
+          "max": 10
+        },
+        {
+          "key": "domain",
+          "type": "string",
+          "label": {
+            "en": "Domain",
+            "fr": "Domaine",
+            "de": "Domain",
+            "es": "Dominio"
+          },
+          "description": {
+            "en": "Only the mailboxes of this domain. Empty: all.",
+            "fr": "Seulement les boîtes de ce domaine. Vide : toutes.",
+            "de": "Nur die Postfächer dieser Domain. Leer: alle.",
+            "es": "Solo los buzones de este dominio. Vacío: todos."
+          },
+          "required": false,
+          "placeholder": {
+            "en": "example.com",
+            "fr": "exemple.fr",
+            "de": "beispiel.de",
+            "es": "ejemplo.es"
+          }
+        }
+      ],
+      "action_timeout_seconds": 60
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "container_down",
+      "label": {
+        "en": "A mailcow container stopped",
+        "fr": "Un conteneur mailcow s'est arrêté",
+        "de": "Ein mailcow-Container ist gestoppt",
+        "es": "Se ha detenido un contenedor de mailcow"
+      },
+      "description": {
+        "en": "A container that was running (postfix, dovecot, rspamd…) is no longer.",
+        "fr": "Un conteneur qui tournait (postfix, dovecot, rspamd…) ne tourne plus.",
+        "de": "Ein Container, der lief (postfix, dovecot, rspamd…), läuft nicht mehr.",
+        "es": "Un contenedor que estaba en marcha (postfix, dovecot, rspamd…) ya no lo está."
+      },
+      "fields": [
+        {
+          "key": "container",
+          "type": "multi_select",
+          "label": {
+            "en": "Container",
+            "fr": "Conteneur",
+            "de": "Container",
+            "es": "Contenedor"
+          },
+          "options": [
+            {
+              "value": "acme",
+              "label": { "en": "acme", "fr": "acme", "de": "acme", "es": "acme" }
+            },
+            {
+              "value": "clamd",
+              "label": { "en": "clamd", "fr": "clamd", "de": "clamd", "es": "clamd" }
+            },
+            {
+              "value": "dockerapi",
+              "label": {
+                "en": "dockerapi",
+                "fr": "dockerapi",
+                "de": "dockerapi",
+                "es": "dockerapi"
+              }
+            },
+            {
+              "value": "dovecot",
+              "label": { "en": "dovecot", "fr": "dovecot", "de": "dovecot", "es": "dovecot" }
+            },
+            {
+              "value": "memcached",
+              "label": {
+                "en": "memcached",
+                "fr": "memcached",
+                "de": "memcached",
+                "es": "memcached"
+              }
+            },
+            {
+              "value": "mysql",
+              "label": { "en": "mysql", "fr": "mysql", "de": "mysql", "es": "mysql" }
+            },
+            {
+              "value": "netfilter",
+              "label": {
+                "en": "netfilter",
+                "fr": "netfilter",
+                "de": "netfilter",
+                "es": "netfilter"
+              }
+            },
+            {
+              "value": "nginx",
+              "label": { "en": "nginx", "fr": "nginx", "de": "nginx", "es": "nginx" }
+            },
+            {
+              "value": "ofelia",
+              "label": { "en": "ofelia", "fr": "ofelia", "de": "ofelia", "es": "ofelia" }
+            },
+            {
+              "value": "olefy",
+              "label": { "en": "olefy", "fr": "olefy", "de": "olefy", "es": "olefy" }
+            },
+            {
+              "value": "php-fpm",
+              "label": { "en": "php-fpm", "fr": "php-fpm", "de": "php-fpm", "es": "php-fpm" }
+            },
+            {
+              "value": "postfix",
+              "label": { "en": "postfix", "fr": "postfix", "de": "postfix", "es": "postfix" }
+            },
+            {
+              "value": "redis",
+              "label": { "en": "redis", "fr": "redis", "de": "redis", "es": "redis" }
+            },
+            {
+              "value": "rspamd",
+              "label": { "en": "rspamd", "fr": "rspamd", "de": "rspamd", "es": "rspamd" }
+            },
+            {
+              "value": "sogo",
+              "label": { "en": "sogo", "fr": "sogo", "de": "sogo", "es": "sogo" }
+            },
+            {
+              "value": "unbound",
+              "label": { "en": "unbound", "fr": "unbound", "de": "unbound", "es": "unbound" }
+            },
+            {
+              "value": "watchdog",
+              "label": { "en": "watchdog", "fr": "watchdog", "de": "watchdog", "es": "watchdog" }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "container",
+          "type": "string",
+          "label": {
+            "en": "Container",
+            "fr": "Conteneur",
+            "de": "Container",
+            "es": "Contenedor"
+          }
+        },
+        {
+          "key": "state",
+          "type": "string",
+          "label": {
+            "en": "State",
+            "fr": "État",
+            "de": "Zustand",
+            "es": "Estado"
+          }
+        }
+      ]
+    },
+    {
+      "key": "container_up",
+      "label": {
+        "en": "A mailcow container is running again",
+        "fr": "Un conteneur mailcow tourne à nouveau",
+        "de": "Ein mailcow-Container läuft wieder",
+        "es": "Un contenedor de mailcow vuelve a funcionar"
+      },
+      "description": {
+        "en": "A container that was stopped is running again.",
+        "fr": "Un conteneur qui était arrêté tourne à nouveau.",
+        "de": "Ein gestoppter Container läuft wieder.",
+        "es": "Un contenedor que estaba detenido vuelve a estar en marcha."
+      },
+      "fields": [
+        {
+          "key": "container",
+          "type": "multi_select",
+          "label": {
+            "en": "Container",
+            "fr": "Conteneur",
+            "de": "Container",
+            "es": "Contenedor"
+          },
+          "options": [
+            {
+              "value": "acme",
+              "label": { "en": "acme", "fr": "acme", "de": "acme", "es": "acme" }
+            },
+            {
+              "value": "clamd",
+              "label": { "en": "clamd", "fr": "clamd", "de": "clamd", "es": "clamd" }
+            },
+            {
+              "value": "dockerapi",
+              "label": {
+                "en": "dockerapi",
+                "fr": "dockerapi",
+                "de": "dockerapi",
+                "es": "dockerapi"
+              }
+            },
+            {
+              "value": "dovecot",
+              "label": { "en": "dovecot", "fr": "dovecot", "de": "dovecot", "es": "dovecot" }
+            },
+            {
+              "value": "memcached",
+              "label": {
+                "en": "memcached",
+                "fr": "memcached",
+                "de": "memcached",
+                "es": "memcached"
+              }
+            },
+            {
+              "value": "mysql",
+              "label": { "en": "mysql", "fr": "mysql", "de": "mysql", "es": "mysql" }
+            },
+            {
+              "value": "netfilter",
+              "label": {
+                "en": "netfilter",
+                "fr": "netfilter",
+                "de": "netfilter",
+                "es": "netfilter"
+              }
+            },
+            {
+              "value": "nginx",
+              "label": { "en": "nginx", "fr": "nginx", "de": "nginx", "es": "nginx" }
+            },
+            {
+              "value": "ofelia",
+              "label": { "en": "ofelia", "fr": "ofelia", "de": "ofelia", "es": "ofelia" }
+            },
+            {
+              "value": "olefy",
+              "label": { "en": "olefy", "fr": "olefy", "de": "olefy", "es": "olefy" }
+            },
+            {
+              "value": "php-fpm",
+              "label": { "en": "php-fpm", "fr": "php-fpm", "de": "php-fpm", "es": "php-fpm" }
+            },
+            {
+              "value": "postfix",
+              "label": { "en": "postfix", "fr": "postfix", "de": "postfix", "es": "postfix" }
+            },
+            {
+              "value": "redis",
+              "label": { "en": "redis", "fr": "redis", "de": "redis", "es": "redis" }
+            },
+            {
+              "value": "rspamd",
+              "label": { "en": "rspamd", "fr": "rspamd", "de": "rspamd", "es": "rspamd" }
+            },
+            {
+              "value": "sogo",
+              "label": { "en": "sogo", "fr": "sogo", "de": "sogo", "es": "sogo" }
+            },
+            {
+              "value": "unbound",
+              "label": { "en": "unbound", "fr": "unbound", "de": "unbound", "es": "unbound" }
+            },
+            {
+              "value": "watchdog",
+              "label": { "en": "watchdog", "fr": "watchdog", "de": "watchdog", "es": "watchdog" }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "container",
+          "type": "string",
+          "label": {
+            "en": "Container",
+            "fr": "Conteneur",
+            "de": "Container",
+            "es": "Contenedor"
+          }
+        }
+      ]
+    },
+    {
+      "key": "queue_high",
+      "label": {
+        "en": "Mail queue too long",
+        "fr": "File d'attente trop longue",
+        "de": "Mail-Warteschlange zu lang",
+        "es": "Cola de correo demasiado larga"
+      },
+      "description": {
+        "en": "The number of mails waiting in the queue went over the threshold of the configuration.",
+        "fr": "Le nombre de mails en attente dans la file a dépassé le seuil de la configuration.",
+        "de": "Die Zahl der wartenden Mails hat die Schwelle der Konfiguration überschritten.",
+        "es": "El número de correos en espera en la cola ha superado el umbral de la configuración."
+      },
+      "variables": [
+        {
+          "key": "queue_size",
+          "type": "number",
+          "label": {
+            "en": "Mails in the queue",
+            "fr": "Mails dans la file",
+            "de": "Mails in der Warteschlange",
+            "es": "Correos en la cola"
+          }
+        },
+        {
+          "key": "threshold",
+          "type": "number",
+          "label": {
+            "en": "Threshold",
+            "fr": "Seuil",
+            "de": "Schwelle",
+            "es": "Umbral"
+          }
+        }
+      ]
+    },
+    {
+      "key": "storage_high",
+      "label": {
+        "en": "Mail storage almost full",
+        "fr": "Stockage presque plein",
+        "de": "Mailspeicher fast voll",
+        "es": "Almacenamiento casi lleno"
+      },
+      "description": {
+        "en": "The disk of the mails went over the threshold of the configuration.",
+        "fr": "Le disque des mails a dépassé le seuil de la configuration.",
+        "de": "Der Mail-Datenträger hat die Schwelle der Konfiguration überschritten.",
+        "es": "El disco del correo ha superado el umbral de la configuración."
+      },
+      "variables": [
+        {
+          "key": "used_percent",
+          "type": "number",
+          "label": {
+            "en": "Used (%)",
+            "fr": "Utilisé (%)",
+            "de": "Belegt (%)",
+            "es": "Usado (%)"
+          }
+        },
+        {
+          "key": "threshold",
+          "type": "number",
+          "label": {
+            "en": "Threshold",
+            "fr": "Seuil",
+            "de": "Schwelle",
+            "es": "Umbral"
+          }
+        }
+      ]
+    },
+    {
+      "key": "quota_high",
+      "label": {
+        "en": "Mailbox almost full",
+        "fr": "Boîte mail presque pleine",
+        "de": "Postfach fast voll",
+        "es": "Buzón casi lleno"
+      },
+      "description": {
+        "en": "A mailbox went over the quota threshold of the configuration.",
+        "fr": "Une boîte mail a dépassé le seuil de quota de la configuration.",
+        "de": "Ein Postfach hat die Kontingent-Schwelle der Konfiguration überschritten.",
+        "es": "Un buzón ha superado el umbral de cuota de la configuración."
+      },
+      "fields": [
+        {
+          "key": "domain",
+          "type": "string",
+          "label": {
+            "en": "Domain",
+            "fr": "Domaine",
+            "de": "Domain",
+            "es": "Dominio"
+          },
+          "required": false
+        },
+        {
+          "key": "mailbox",
+          "type": "string",
+          "label": {
+            "en": "Mailbox",
+            "fr": "Boîte mail",
+            "de": "Postfach",
+            "es": "Buzón"
+          },
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "mailbox",
+          "type": "string",
+          "label": {
+            "en": "Mailbox",
+            "fr": "Boîte mail",
+            "de": "Postfach",
+            "es": "Buzón"
+          }
+        },
+        {
+          "key": "domain",
+          "type": "string",
+          "label": {
+            "en": "Domain",
+            "fr": "Domaine",
+            "de": "Domain",
+            "es": "Dominio"
+          }
+        },
+        {
+          "key": "percent",
+          "type": "number",
+          "label": {
+            "en": "Quota used (%)",
+            "fr": "Quota utilisé (%)",
+            "de": "Kontingent belegt (%)",
+            "es": "Cuota usada (%)"
+          }
+        },
+        {
+          "key": "threshold",
+          "type": "number",
+          "label": {
+            "en": "Threshold",
+            "fr": "Seuil",
+            "de": "Schwelle",
+            "es": "Umbral"
+          }
+        }
+      ]
+    },
+    {
+      "key": "quarantine_new",
+      "label": {
+        "en": "A mail was quarantined",
+        "fr": "Un mail a été mis en quarantaine",
+        "de": "Eine Mail wurde in Quarantäne gestellt",
+        "es": "Se ha puesto un correo en cuarentena"
+      },
+      "description": {
+        "en": "Rspamd held a new mail in quarantine (10 per read at most).",
+        "fr": "Rspamd a mis un nouveau mail en quarantaine (10 par lecture au plus).",
+        "de": "Rspamd hat eine neue Mail in Quarantäne gestellt (höchstens 10 pro Lesen).",
+        "es": "Rspamd ha retenido un correo nuevo en cuarentena (10 por lectura como máximo)."
+      },
+      "fields": [
+        {
+          "key": "recipient",
+          "type": "string",
+          "label": {
+            "en": "Recipient",
+            "fr": "Destinataire",
+            "de": "Empfänger",
+            "es": "Destinatario"
+          },
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "sender",
+          "type": "string",
+          "label": {
+            "en": "Sender",
+            "fr": "Expéditeur",
+            "de": "Absender",
+            "es": "Remitente"
+          }
+        },
+        {
+          "key": "recipient",
+          "type": "string",
+          "label": {
+            "en": "Recipient",
+            "fr": "Destinataire",
+            "de": "Empfänger",
+            "es": "Destinatario"
+          }
+        },
+        {
+          "key": "subject",
+          "type": "string",
+          "label": {
+            "en": "Subject",
+            "fr": "Objet",
+            "de": "Betreff",
+            "es": "Asunto"
+          }
+        },
+        {
+          "key": "score",
+          "type": "number",
+          "label": {
+            "en": "Spam score",
+            "fr": "Score de spam",
+            "de": "Spam-Wert",
+            "es": "Puntuación de spam"
+          }
+        },
+        {
+          "key": "virus",
+          "type": "boolean",
+          "label": {
+            "en": "Virus found",
+            "fr": "Virus détecté",
+            "de": "Virus gefunden",
+            "es": "Virus detectado"
+          }
+        }
+      ]
+    },
+    {
+      "key": "ip_banned",
+      "label": {
+        "en": "An IP was banned",
+        "fr": "Une IP a été bannie",
+        "de": "Eine IP wurde gesperrt",
+        "es": "Se ha bloqueado una IP"
+      },
+      "description": {
+        "en": "The mailcow fail2ban (netfilter) banned a new address after failed logins.",
+        "fr": "Le fail2ban de mailcow (netfilter) a banni une nouvelle adresse après des échecs de connexion.",
+        "de": "Das fail2ban von mailcow (netfilter) hat nach Fehlanmeldungen eine neue Adresse gesperrt.",
+        "es": "El fail2ban de mailcow (netfilter) ha bloqueado una dirección nueva tras inicios de sesión fallidos."
+      },
+      "variables": [
+        {
+          "key": "ip",
+          "type": "string",
+          "label": {
+            "en": "IP or network",
+            "fr": "IP ou réseau",
+            "de": "IP oder Netz",
+            "es": "IP o red"
+          }
+        }
+      ]
+    },
+    {
+      "key": "connection_lost",
+      "label": {
+        "en": "mailcow server unreachable",
+        "fr": "Serveur mailcow injoignable",
+        "de": "mailcow-Server nicht erreichbar",
+        "es": "Servidor mailcow inaccesible"
+      },
+      "description": {
+        "en": "The server answered before, and no longer does (neither address).",
+        "fr": "Le serveur répondait, et ne répond plus (sur aucune adresse).",
+        "de": "Der Server hat geantwortet und tut es nicht mehr (auf keiner Adresse).",
+        "es": "El servidor respondía y ya no lo hace (en ninguna dirección)."
+      },
+      "variables": [
+        {
+          "key": "reason",
+          "type": "string",
+          "label": {
+            "en": "Reason (code)",
+            "fr": "Raison (code)",
+            "de": "Grund (Code)",
+            "es": "Motivo (código)"
+          }
+        },
+        {
+          "key": "message",
+          "type": "string",
+          "label": {
+            "en": "Message",
+            "fr": "Message",
+            "de": "Meldung",
+            "es": "Mensaje"
+          }
+        }
+      ]
+    },
+    {
+      "key": "connection_restored",
+      "label": {
+        "en": "mailcow server reachable again",
+        "fr": "Serveur mailcow à nouveau joignable",
+        "de": "mailcow-Server wieder erreichbar",
+        "es": "Servidor mailcow accesible de nuevo"
+      },
+      "description": {
+        "en": "The server answers again after being unreachable.",
+        "fr": "Le serveur répond à nouveau après avoir été injoignable.",
+        "de": "Der Server antwortet wieder, nachdem er nicht erreichbar war.",
+        "es": "El servidor vuelve a responder tras estar inaccesible."
+      },
+      "variables": [
+        {
+          "key": "transport",
+          "type": "string",
+          "label": {
+            "en": "Address used (local or cloud)",
+            "fr": "Adresse utilisée (local ou cloud)",
+            "de": "Verwendete Adresse (local oder cloud)",
+            "es": "Dirección usada (local o cloud)"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "refresh",
+      "label": {
+        "en": "Read the mailcow server now",
+        "fr": "Lire le serveur mailcow maintenant",
+        "de": "mailcow-Server jetzt lesen",
+        "es": "Leer el servidor mailcow ahora"
+      },
+      "description": {
+        "en": "Refresh every value, and hand the main counters to the next actions.",
+        "fr": "Actualise toutes les valeurs et passe les principaux compteurs aux actions suivantes.",
+        "de": "Aktualisiert alle Werte und gibt die wichtigsten Zähler an die nächsten Aktionen weiter.",
+        "es": "Actualiza todos los valores y pasa los contadores principales a las acciones siguientes."
+      },
+      "timeout_seconds": 60,
+      "outputs": [
+        {
+          "key": "reachable",
+          "type": "boolean",
+          "label": {
+            "en": "Server reachable",
+            "fr": "Serveur joignable",
+            "de": "Server erreichbar",
+            "es": "Servidor accesible"
+          }
+        },
+        {
+          "key": "queue_size",
+          "type": "number",
+          "label": {
+            "en": "Mails in the queue",
+            "fr": "Mails dans la file",
+            "de": "Mails in der Warteschlange",
+            "es": "Correos en la cola"
+          }
+        },
+        {
+          "key": "quarantine",
+          "type": "number",
+          "label": {
+            "en": "Mails in quarantine",
+            "fr": "Mails en quarantaine",
+            "de": "Mails in Quarantäne",
+            "es": "Correos en cuarentena"
+          }
+        },
+        {
+          "key": "containers_down",
+          "type": "number",
+          "label": {
+            "en": "Containers down",
+            "fr": "Conteneurs arrêtés",
+            "de": "Gestoppte Container",
+            "es": "Contenedores detenidos"
+          }
+        },
+        {
+          "key": "storage_percent",
+          "type": "number",
+          "label": {
+            "en": "Mail storage used (%)",
+            "fr": "Stockage utilisé (%)",
+            "de": "Mailspeicher belegt (%)",
+            "es": "Almacenamiento usado (%)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "flush_queue",
+      "label": {
+        "en": "Flush the mail queue",
+        "fr": "Vider la file d'attente",
+        "de": "Mail-Warteschlange senden",
+        "es": "Vaciar la cola de correo"
+      },
+      "description": {
+        "en": "Ask Postfix to deliver the waiting mails now (needs \"Allow changes\").",
+        "fr": "Demande à Postfix de livrer maintenant les mails en attente (nécessite « Autoriser les modifications »).",
+        "de": "Bittet Postfix, die wartenden Mails jetzt zuzustellen (benötigt „Änderungen erlauben“).",
+        "es": "Pide a Postfix que entregue ahora los correos en espera (necesita «Permitir cambios»)."
+      },
+      "timeout_seconds": 60,
+      "outputs": [
+        {
+          "key": "queued_before",
+          "type": "number",
+          "label": {
+            "en": "Mails that were waiting",
+            "fr": "Mails qui attendaient",
+            "de": "Mails, die warteten",
+            "es": "Correos que esperaban"
+          }
+        }
+      ]
+    },
+    {
+      "key": "set_mailbox_active",
+      "label": {
+        "en": "Turn a mailbox on or off",
+        "fr": "Activer ou désactiver une boîte mail",
+        "de": "Postfach ein- oder ausschalten",
+        "es": "Activar o desactivar un buzón"
+      },
+      "description": {
+        "en": "Activate or deactivate a mailbox by its address (needs \"Allow changes\").",
+        "fr": "Active ou désactive une boîte mail par son adresse (nécessite « Autoriser les modifications »).",
+        "de": "Aktiviert oder deaktiviert ein Postfach über seine Adresse (benötigt „Änderungen erlauben“).",
+        "es": "Activa o desactiva un buzón por su dirección (necesita «Permitir cambios»)."
+      },
+      "timeout_seconds": 30,
+      "fields": [
+        {
+          "key": "mailbox",
+          "type": "string",
+          "label": {
+            "en": "Mailbox address",
+            "fr": "Adresse de la boîte",
+            "de": "Adresse des Postfachs",
+            "es": "Dirección del buzón"
+          },
+          "placeholder": {
+            "en": "john@example.com",
+            "fr": "jean@exemple.fr",
+            "de": "max@beispiel.de",
+            "es": "juan@ejemplo.es"
+          },
+          "required": true
+        },
+        {
+          "key": "active",
+          "type": "boolean",
+          "label": {
+            "en": "Active",
+            "fr": "Active",
+            "de": "Aktiv",
+            "es": "Activo"
+          },
+          "required": false,
+          "default": true
+        }
+      ],
+      "outputs": [
+        {
+          "key": "changed",
+          "type": "boolean",
+          "label": {
+            "en": "State changed",
+            "fr": "État modifié",
+            "de": "Zustand geändert",
+            "es": "Estado cambiado"
+          }
+        }
+      ]
+    }
+  ]
+}
