@@ -10,6 +10,10 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [2.0.1] - 2026-11-16
+
+- Maintenance release, no functional change.
+
 ## [2.0.0] - 2026-10-26
 
 ### Added
@@ -46,5 +50,6 @@ the notes of the version's GitHub Release.
 - The certificate of the public address is always checked; only the LAN
   address can skip the check. The API key is never logged.
 
-[Unreleased]: https://github.com/prohand/gladys-mailcow/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/prohand/gladys-mailcow/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/prohand/gladys-mailcow/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/prohand/gladys-mailcow/releases/tag/v2.0.0
